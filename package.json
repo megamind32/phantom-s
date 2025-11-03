@@ -1,0 +1,20 @@
+{
+    "name": "ph-dr-aug",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "vue-cli-service serve",
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build"
+    },
+    "dependencies": {
+        "@popperjs/core": "^2.11.8",
+        "core-js": "^3.8.3",
+        "vue": "^3.2.13",
+        "vue-router": "^4.4.3"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "~5.0.0",
+        "@vue/cli-service": "~5.0.0"
+    }
+}
