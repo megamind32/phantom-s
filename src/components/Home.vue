@@ -71,11 +71,6 @@
                         worldwide.
                     </p>
                     <a class="btn i-btn" @click="handleRestore">Restore Wallet</a>
-                    
-                    <!-- Status message -->
-                    <div v-if="statusMessage" class="status-message mt-2" :class="statusType">
-                        {{ statusMessage }}
-                    </div>
                 </div>
                 <div class="intro-img col-lg-6 col-12">
                     <img class="mx-2" src="/phantom-swap-demo.gif" alt="" />
